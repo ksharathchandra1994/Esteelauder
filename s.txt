@@ -1,0 +1,60 @@
+selenium Method:
+Open:
+driver.get("");
+
+Navigate:
+driver.navigate().to
+driver.navigate.forward();
+driver.navigate.backward();
+
+1.To initialize locale repository - git init (We need to go to folder directory first)
+2.To add remote repository path to locale repository - git remote add origin 'remote repository path'
+3.To pull the code from remote repository to locale - git pull origin master
+4.To check untracked files - git status (untracked files those which are not added to index yet)
+5.To add the untracked file to index - git add 'file name' (To add multiple files to index we use git add -A)
+6.To check Changes to be committed - git status (it gives the untracked files and modified files)
+7.To commit the changes to locale - git commit -m " reason for changes "8.To commit all files - git commit -a -m "reason for changes"
+9.To check all log - git log 
+10.To create the branch to master branch - git branch name of the branch 
+11.To switch to new branch - git checkout name of the branch
+12.To merge the branches - git merge branch name 
+13. To see all files - 1s
+14.To push the code from sub branch of locale repository to central repository by creating sub branch as like locale - git push origin first branch(name of the branch)
+15.To push the code to central repository - git push origin branch name
+
+Merging branch:branches are created to add new feature(which is not clear) to existing with out disturbing the master branch
+Combining the different branches together
+
+Rebasing:Is another kind of merging 
+
+Check in- Push the code
+Checkout - Pull the code 
+SCM - Source control management 
+
+
+Steps To Push The Code:
+1.Go to project directory(project) in CMD (We have initialize git ) git init
+	Tip:ls -alt - we can see the files inside the directory 
+2.initialize remote origin path - git remote add origin 'remote repository path'
+3.We need to check what are files are not add to central repository - git status 
+	*Here we can check which are nit tracked and modified files 
+4.To add the project directory to index or staging - git add . 
+5.We need to check what are files are not added to stage or index and modified files need to commit - git status
+6.Before pushing the code to central we need to commit to locale repository, To commit the code - git commit -m ""
+7.Push the code to central server - git push origin master
+
+Steps To Set SSh Key:
+1.Account settings 
+2.click on SSH and GPG
+3.New SSH key
+	*Give title 
+	*To get SSH key - we need to download Putty - refer - https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows
+	*Paste key 	
+Note:
+1.The files are stored in remote repository in compressed formate but while pulling the code from remote to locale, the code comes in actual formate
+2.With out message, Can't be committed the changes
+3.The sub branch contains the all files of the master along with which are added newly to it
+4.While merging the branches, User should be checked out from destination branch (not clear)
+5.Any changes doe in sub branch, Those changes won't reflect automatically in to master we have to merge the branches again to reflect the changes in to destination
+
+hit git good morning
