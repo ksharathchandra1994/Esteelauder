@@ -56,5 +56,3 @@ Note:
 3.The sub branch contains the all files of the master along with which are added newly to it
 4.While merging the branches, User should be checked out from destination branch (not clear)
 5.Any changes doe in sub branch, Those changes won't reflect automatically in to master we have to merge the branches again to reflect the changes in to destination
-
-hit git good morning
