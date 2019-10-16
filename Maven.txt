@@ -1,0 +1,53 @@
+Maven:It is a build management tool
+	*validate the project is correct and all necessary information is available if it not available it will update(Jars)
+	*compile the source code of the project
+	*test the compiled source code using a suitable testing framework. 
+	*take the compiled code and package it in its distributable format, such as a JAR.
+	*install the package into the local repository, for use as a dependency in other projects locally
+	*final package to the remote repository
+
+
+Maven Commands:https://www.logicbig.com/tutorials/build-tools/apache-maven/playing-with-maven-commands.html
+
+1.mvn compile: Compiles the source code of the projects. This command will do all pre compile phases which are validate, initialize, generate-sources, process-sources, generate-resources, process-resources, and finally compile. By default executing this phase will download external dependencies from remote repository.
+
+________________________________________________________________________________________________________________________________________________________________________________________
+
+Maven Installation:
+------------------
+1.Maven comes with latest version of eclipse (Oxygen)
+2.If it lower version we need to download the maven eclipse plug-in 
+________________________________________________________________________________________________________________________________________________________________________________________
+
+Setting Up Maven To Terminal:
+---------------------------
+1. Download the 'apache-maven-3.6.2-bin.zip' from 'https://maven.apache.org/download.cgi'
+2.Extract the 'apache-maven-3.6.2-bin.zip' and keep some folder
+3.Add path of 'apache-maven-3.6.2' to system variables 
+	*'\apache-maven-3.6.2' - MAVEN_HOME
+	*'\bin' to MAVEN_HOME
+
+________________________________________________________________________________________________________________________________________________________________________________________
+
+How to tell Maven to use Java 8:
+-------------------------------
+1.<properties>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
+	
+2.Alternative, configure the plugin directly.
+<build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+	

@@ -1,0 +1,174 @@
+Java Notes:
+
+1.With out main method java code can be executed
+------------------------------------------------ 
+
+	Yes their is a way to run a JAVA program without the main method.
+	Code for That
+	public class Manish{
+	static{
+	System.out.println("Hello Youth4Work");
+	System.exit(0);
+	}
+	Now you can compile the program using javac Manish.java
+	and after that run it using java Manish.
+	It will print the message as expected. But it will show a message 
+	"Exception in thread "main" java.lang.NoSuchMethodError: main"
+	To avoid this message I have added System.exit(0); after print statement The System.exit(0) lets the program exit before the JVM is looking for the main method.
+	One more thing this Up to and including Java 6 it was possible to do this using the Static Initialization block but In Java 7, however, this does not work anymore, even though it compiles, the following error will appear when you try to execute it:
+	"The program compiled successfully, but main class was not found. Main class should contain method: public static void main (String[] args)."
+________________________________________________________________________________________________________________________________________________________________________________________
+
+What is main():
+---------------
+
+1.Compiler is not responsible to check main() method is present in java program or not but JVM is responsible 
+2.If main method is missing in any program we can compile the code but can't be executed
+3.If code executed we get RE:NoSuchMethodError:main
+4.When any JAVA code is executed, The looks for main() with correct syntax 
+5.The main() name can be customized but syntax of main() in JVM has to be changed according to new changes 
+6.main() is public to call by JVM from any where 
+7.main() is static because it is not related to any object so it has to be called by JVM directly 
+8.main() is void because it won't return anything to JVM
+9.Name(main) of main() is configured in JVM 
+10.[String...args] is command line arguments 
+11.If we change anything in syntax of main() we get "RE:NoSuchMethodError:main"
+
+Few Changes are acceptable in main():
+1.The order of modifiers is not important that instead of "public static" we can take "static public" also 
+2.We can declare "String[]" in any acceptable form
+	*main(String[] args)
+	*main(String []args)
+	*main(String...args)
+3.In (String[] args), args is name of String[] so that the name of String[] can be changed to any valid java identifier 
+4.We can replace String[] with var arg parameters from JAVA_5
+	*main(String[] args) to main(String...args)
+6.We can declare main() with following modifiers 
+	*final
+	*synchronized
+	*strictfp
+7.We can declare main() as below also 
+	*final static synchronized strictfp public public void main(String...sharath)
+
+main() overloading:
+1.We can overload the main method the but JVM calls always public static void main(String[] args)  only
+	Ex_1:public static void main(String[] args) 
+	   {
+		   System.out.println("hi String[]");
+		   
+		  
+	   }
+   
+	Ex_2: public static void main(int args) - it treated as normal method 
+	   {
+		   System.out.println("hi int[]");
+	   }  
+2.The over loaded method should be called explicitly then it will be executed as normal method 
+
+Inheritance concept with main method:
+1.Inheritance concept is applicable to main method. Hence while executing in child class, If child class doesn't have main() the
+ JVM looks main() in parent class if main() is present in parent class it will be executed 
+
+Over Hiding concept for main method:
+1.If both parent and child class are having main, Method hiding happens and child class main method get executed 
+
+
+________________________________________________________________________________________________________________________________________________________________________________________
+
+Access Specifier vs Access Modifier Java :
+-----------------------------------------
+
+An access specifier specifies the access and access modifier modifies the access.Access specifiers and access modifiers are applied to variables, methods and classes. Note, you cannot apply all specifiers to all (variables, methods and classes) and all modifiers to all. That is, for example, a local variable cannot be static and a variable cannot be abstract. Similarly, a class cannot be static.
+
+________________________________________________________________________________________________________________________________________________________________________________________
+
+Why wrappers class are required :
+---------------------------------
+
+Java is an object-oriented language and can view everything as an object. A simple file can be treated as an object , an address of a system can be seen as an object , an image can be treated as an object (with java.awt.Image) and a simple data type can be converted into an object (with wrapper classes). This tutorial discusses wrapper classes. Wrapper classes are used to convert any data type into an object.
+
+The primitive data types are not objects; they do not belong to any class; they are defined in the language itself. Sometimes, it is required to convert data types into objects in Java language. For example, upto JDK1.4, the data structures accept only objects to store. A data type is to be converted into an object and then added to a Stack or Vector etc. For this conversion, the designers introduced wrapper classes.
+
+It can be handy to initialize Objects to null or send null parameters into a method/constructor to indicate state or function. This can't be done with primitives.
+
+Many programmers initialize numbers to 0 (default) or -1 to signify this, but depending on the scenario, this may be incorrect or misleading.
+
+This will also set the scene for a NullPointerException when something is being used incorrectly, which is much more programmer-friendly than some arbitrary bug down the line.
+________________________________________________________________________________________________________________________________________________________________________________________
+Java toString()
+---------------
+
+Java toString() method
+If you want to represent any object as a string, toString() method comes into existence.
+
+The toString() method returns the string representation of the object.
+
+If you print any object, java compiler internally invokes the toString() method on the object. So overriding the toString() method, returns the desired output, it can be the state of an object etc. depends on your implementation.
+
+Advantage of Java toString() method
+By overriding the toString() method of the Object class, we can return values of the object, so we don't need to write much code.
+
+Understanding problem without toString() method
+Let's see the simple code that prints reference.
+
+class Student{  
+ int rollno;  
+ String name;  
+ String city;  
+  
+ Student(int rollno, String name, String city){  
+ this.rollno=rollno;  
+ this.name=name;  
+ this.city=city;  
+ }  
+  
+ public static void main(String args[]){  
+   Student s1=new Student(101,"Raj","lucknow");  
+   Student s2=new Student(102,"Vijay","ghaziabad");  
+     
+   System.out.println(s1);//compiler writes here s1.toString()  
+   System.out.println(s2);//compiler writes here s2.toString()  
+ }  
+}  
+Output:Student@1fee6fc
+       Student@1eed786
+As you can see in the above example, printing s1 and s2 prints the hashcode values of the objects but I want to print the values of these objects. Since java compiler internally calls toString() method, overriding this method will return the specified values. Let's understand it with the example given below:
+
+________________________________________________________________________________________________________________________________________________________________________________________
+Immutable String in Java
+------------------------
+In java, string objects are immutable. Immutable simply means unmodifiable or unchangeable.
+
+Once string object is created its data or state can't be changed but a new string object is created.
+
+Let's try to understand the immutability concept by the example given below:
+
+class Testimmutablestring{  
+ public static void main(String args[]){  
+   String s="Sachin";  
+   s.concat(" Tendulkar");//concat() method appends the string at the end  
+   System.out.println(s);//will print Sachin because strings are immutable objects  
+ }  
+}  
+
+ow it can be understood by the diagram given below. Here Sachin is not changed but a new object is created with sachintendulkar. That is why string is known as immutable.
+
+Heap diagram
+As you can see in the above figure that two objects are created but s reference variable still refers to "Sachin" not to "Sachin Tendulkar".
+
+But if we explicitely assign it to the reference variable, it will refer to "Sachin Tendulkar" object.For example:
+
+class Testimmutablestring1{  
+ public static void main(String args[]){  
+   String s="Sachin";  
+   s=s.concat(" Tendulkar");  
+   System.out.println(s);  
+ }  
+}  
+
+Output:Sachin Tendulkar
+In such case, s points to the "Sachin Tendulkar". Please notice that still sachin object is not modified.
+
+Why string objects are immutable in java?
+-----------------------------------------
+Because java uses the concept of string literal.Suppose there are 5 reference variables,all referes to one object "sachin".If one reference variable changes the value of the object, it will be affected to all the reference variables. That is why string objects are immutable in java.

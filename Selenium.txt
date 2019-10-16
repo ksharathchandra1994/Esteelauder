@@ -1,0 +1,10 @@
+Exceptions:
+________________________________________________________________________________________________________________________________________________________________________________________
+
+Selenium Run Time Exceptions:
+----------------------------
+1.org.openqa.selenium.invalidargumentexception: If we pass URL with out "https://" to get() method this exception gets triggered 
+
+JAVA Run Time Exceptions:
+------------------------
+1..java.lang.IllegalStateException: If driver executable path is not correct this exception gets triggered
