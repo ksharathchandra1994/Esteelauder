@@ -1,11 +1,4 @@
-selenium Method:
-Open:
-driver.get("");
-
-Navigate:
-driver.navigate().to
-driver.navigate.forward();
-driver.navigate.backward();
+----------------------------------------------------Git Notes----------------------------------------------------------------
 
 1.To initialize locale repository - git init (We need to go to folder directory first)
 2.To add remote repository path to locale repository - git remote add origin 'remote repository path'
