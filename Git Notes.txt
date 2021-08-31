@@ -1,33 +1,76 @@
-----------------------------------------------------Git Notes----------------------------------------------------------------
+----------------------------------------------------Git Notes------------------------------------------------------------------------------------------
+
+Setup:
+1. Download the Git installer from https://git-scm.com/downloads
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Git Work flow: Working directory(Working copy) --> Staging/index --> Local repository --> Remote repository
+
+Working directory:
+When you worked on your project and made some changes, you are dealing with your project's working directory. This project directory is available on your computer's filesystem. All the changes you make will remain in the working directory until you add them to the staging area
+
+Staging/index: 
+The Git index is a staging area between the working directory and repository. It is used to build up a set of changes that you want to commit together. You are allowed to add and remove changes from the staging area. The staging area can be considered as a real area where git stores the changes.
+
+
+1.First we create the basic framework and push same to git repository master branch
+2.We share the git link of project to existing team members or if any new members joins the team to start working 
+3.We create the Separate branches in remote repository
+3.Each member pulls the their branch in to local repository and start working on their branches
+4.Once work is done, The changes are moved to remote branch and raise the PR (Pull Request)
+	* While raising the PR by mentioning the reviewer so that they will get notified 
+		* 1st Case: We can raise the PR once entire work is done 
+		* 2nd Case: we can raise when ever some part work is completed --> 2nd case is preferred because we can review easily, ignore the issues at early stages
+	* The reviewer pulls the branch to his local and review the changes, he/his gives the comments(Changes to be done/Approval)
+		* We check the code & execute the code
+	* If everything is working fine the branch will be merged with master branch 
+5.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Git Fetch VS Git Pull:
+
+When downloading content from a remote repo, git pull and git fetch commands are available to accomplish the task. You can consider git fetch the 'safe' version of the two commands. It will download the remote content but not update your local repo's working state(Working copy), leaving your current work intact. git pull is the more aggressive alternative, it will download the remote content for the active local branch and immediately execute git merge to create a merge commit for the new remote content. If you have pending changes in progress this will cause conflicts and kick-off the merge conflict resolution flow.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 1.To initialize locale repository - git init (We need to go to folder directory first)
 2.To add remote repository path to locale repository - git remote add origin 'remote repository path'
+	* To map the local repository and remote repository
 3.To pull the code from remote repository to locale - git pull origin master
 4.To check untracked files - git status (untracked files those which are not added to index yet)
 5.To add the untracked file to index - git add 'file name' (To add multiple files to index we use git add -A)
 6.To check Changes to be committed - git status (it gives the untracked files and modified files)
-7.To commit the changes to locale - git commit -m " reason for changes "8.To commit all files - git commit -a -m "reason for changes"
+7.To commit the changes to locale - git commit -m " reason for changes "
+8.To commit all files - git commit -a -m "reason for changes"
 9.To check all log - git log 
-10.To create the branch to master branch - git branch name of the branch 
+10.To create the branch to master branch - git branch name of the branch
 11.To switch to new branch - git checkout name of the branch
 12.To merge the branches - git merge branch name 
-13. To see all files - 1s
+13.To see all files - 1s
 14.To push the code from sub branch of locale repository to central repository by creating sub branch as like locale - git push origin first branch(name of the branch)
 15.To push the code to central repository - git push origin branch name
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Branching:
+1.We pull the latest version or we clone the project for the first time
+2.We create the branch for the new feature and work on the same feature branch
+3.We raise the PR and merge the branches to master once PR is approved
+
+PR: Pull request:
+
 
 Merging branch:branches are created to add new feature(which is not clear) to existing with out disturbing the master branch
 Combining the different branches together
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Rebasing:Is another kind of merging 
 
 Check in- Push the code
 Checkout - Pull the code 
 SCM - Source control management 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Steps To Push The Code:
 
@@ -41,7 +84,7 @@ Steps To Push The Code:
 6.Before pushing the code to central we need to commit to locale repository, To commit the code - git commit -m ""
 7.Push the code to central server - git push origin master
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Steps To Set SSh Key:
 1.Account settings 
@@ -51,7 +94,8 @@ Steps To Set SSh Key:
 	*To get SSH key - we need to download Putty - refer - https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows
 	*Paste key 	
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Note:
 1.The files are stored in remote repository in compressed formate but while pulling the code from remote to locale, the code comes in actual formate
 2.With out message, Can't be committed the changes
@@ -59,13 +103,13 @@ Note:
 4.While merging the branches, User should be checked out from destination branch (not clear)
 5.Any changes doe in sub branch, Those changes won't reflect automatically in to master we have to merge the branches again to reflect the changes in to destination
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Steps To Pull The Changes"
 1.Go to directory 
 2.Open CMD and enter command - git pull origin master
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Steps To Clone The Project
 1.Go to directory 
