@@ -1,5 +1,5 @@
 ----------------------------------------------------Git Notes------------------------------------------------------------------------------------------
-Test Branch 
+Test Branch
 
 Setup:
 1. Download the Git installer from https://git-scm.com/downloads
