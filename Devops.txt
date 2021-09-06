@@ -1,0 +1,28 @@
+DevOps: It is Software development approach which involves Continues Development, Continues Testing, Continues integration, Continues Deployment, Continues Monitoring throughout its development life-cycle 
+	
+1.Version control system (Source code management) git 
+2.Continues integration : It is building application continuously, After doing changes CI tool pulls the latest code and prepares the build, Preparing means it includes below action 
+	* Compiling source code
+	* Validating 
+	* Reviewing 
+	* Unit Testing
+	* integration Testing
+	* Packing Application 
+
+3.Continues Delivery : Jenkins deploys build in to test servers to perform the user acceptance  testing with help of Selenium. Once it is done the build will be deployed in to prod servers
+
+CI Tool:
+	* If any changes done in Source code, It takes code and makes build with help of Build automation tools like Maven, Gradle, Ant
+	* Once build is deployed in test servers, It test source code with help of Selenium 
+	* After completion of Testing, It deploys the build in to PROD server 
+		* to deploy the code to servers we use tools like Docker, Pappet  
+	* Once build is deployed to Prod Server, It will continuously monitored with help of tools like Nagives, Plank, Elk Stack
+
+Continues integration:	Version Control --> Build --> Unit Test --> Deploy To Test Servers --> Automation Testing --> Deploy To Production 
+	
+	* Once Developers write the code, They commit the code Version control system  (Git/SVN ) with proper version tags (For tracking purpose)-- VC
+	* Here we merge code the from various branches of repository, Code compiling - Build
+	* Unit Testing (Here, We break software in to different individual units, perform test ), Then Integration Testing (Here we check integration between individual units) - Unit Testing
+	* Build deployment in to Test Servers - Deploy
+	* Automation Testing (Acceptance Testing)
+	* Build Deploying in to PRODUCTION 

@@ -1,0 +1,181 @@
+In this article, we will learn how to retry failed test in TestNG with IRetryAnalyzer and also how to rerun all tests from scratch in a test class. To retry a failed test, we will use the IRetryAnalyzer interface. It reruns the Selenium TestNG tests when they are failed. If you work on a test automation project, you’d know that the most difficult part of automation is the analysis of test executions. At the end of the execution, you need to analyze failed test cases and try to figure out if there’s any false positive/flaky situation caused by network glitch, time-out, or some other problem.
+
+Also, some tests are dependent on each other and when a test fails maybe we want to run the tests before that test, in other words, we want to run the tests inside a test class from scratch. Also, I will explain how to rerun tests in a class for TestNG projects. Let’s start with how to rerun a failed test with IRetryAnalyzer.
+
+How to Retry Failed Test in TestNG with IRetryAnalyzer
+First of all, you need to create a separate class that implements this IRetryAnalyzer like the below example:
+
+package retrysingletest;
+import org.testng.IRetryAnalyzer;
+import org.testng.ITestResult;
+public class Retry implements IRetryAnalyzer {
+    private int count = 0;
+    private static int maxTry = 3;
+    @Override
+    public boolean retry(ITestResult iTestResult) {
+        if (!iTestResult.isSuccess()) {                      //Check if test not succeed
+            if (count < maxTry) {                            //Check if maxtry count is reached
+                count++;                                     //Increase the maxTry count by 1
+                iTestResult.setStatus(ITestResult.FAILURE);  //Mark test as failed
+                return true;                                 //Tells TestNG to re-run the test
+            } else {
+                iTestResult.setStatus(ITestResult.FAILURE);  //If maxCount reached,test marked as failed
+            }
+        } else {
+            iTestResult.setStatus(ITestResult.SUCCESS);      //If test passes, TestNG marks it as passed
+        }
+        return false;
+    }
+}
+In case, you want to decrease or increase the re-run number of test cases, you need to change the maxTry value. In this example, failed test cases will run 3 times till it passes. In case it fails the third time, test execution will stop and TestNG will mark this case as failed.
+
+Using retryAnalyzer attribute in the @Test annotation
+The next step is to associate your test cases with IRetryAnalyzer. In order to do this, you need to use the method below.
+
+@Test(retryAnalyzer = Retry.class)
+public void testCase() {
+}
+
+In TestNG Listeners article I described how to use the listener. I will go on with that example and Retry Class in that project. Also, I changed SampleTest.java test class as follows.
+
+package retrysingletest;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
+public class RetryOnlyFailedTests extends BaseTest{
+    @Test(retryAnalyzer = Retry.class)
+    public void test1() {
+        //Negative Scenario
+        assertEquals(2+2,5,"Addition Problem! 2+2 must be 4!\n");
+    }
+    @Test(retryAnalyzer = Retry.class)
+    public void test2() {
+        //Negative Scenario
+        assertEquals(2+2,3,"Addition Problem! 2+2 must be 4!\n");
+    }
+    @Test(retryAnalyzer = Retry.class)
+    public void test3() {
+        //Postive Scenario
+        assertEquals(2+2,4,"Addition Problem! 2+2 must be 4!\n");
+    }
+}
+In the above scenario, test1 and test 2 re-runs 3 times and it fails during each execution.  In the Retry class’s retry method, when the count is 3, it is smaller than maxTry and the test goes to the else branch and the test fails. However, test3 passed at the first execution as shown below.
+
+retry failed test cases in testng
+
+Using Retry Class with ITestAnnotationTransformer Interface
+Due to the static nature of Annotations, recompilation is needed when you want to change values. You can override this behavior at runtime with IAnnotationTransformer listener. IAnnotationTransformer is a TestNG listener which allows you to modify TestNG annotations and configure them further during runtime. 
+
+Transform method is called for every test during the test run. We can use this listener for our retry analyzer as shown below:
+
+package retrysingletest;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import org.testng.IAnnotationTransformer;
+import org.testng.annotations.ITestAnnotation;
+public class AnnotationTransformer implements IAnnotationTransformer {
+    @Override
+    public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
+        annotation.setRetryAnalyzer(Retry.class);
+    }
+}
+We need to add also this listener in our TestNG.xml file.
+
+
+ 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestNG retrysingletest.Listener Example">
+    <listeners>
+        <listener class-name="retrysingletest.Listener"/>
+        <listener class-name="retrysingletest.AnnotationTransformer"/>
+    </listeners>
+    <test name="TestNG Sample Test" preserve-order="true">
+        <classes>
+            <class name="retrysingletest.RetryOnlyFailedTests"/>
+        </classes>
+    </test>
+</suite>
+From now on, we do not need to specify “@Test(retryAnalyzer = Retry.class)” in this annotation. We can just only use @Test annotation without retryAnalyzer attribute.
+
+package retrysingletest;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
+public class RetryOnlyFailedTests extends BaseTest{
+    @Test
+    public void test1() {
+        //Negative Scenario
+        assertEquals(2+2,5,"Addition Problem! 2+2 must be 4!\n");
+    }
+    @Test
+    public void test2() {
+        //Negative Scenario
+        assertEquals(2+2,3,"Addition Problem! 2+2 must be 4!\n");
+    }
+    @Test
+    public void test3() {
+        //Positive Scenario
+        assertEquals(2+2,4,"Addition Problem! 2+2 must be 4!\n");
+    }
+}
+At this time, we will get the same result if we run the tests. :)
+
+retry failed test cases in testng
+
+For IRetryAnalyzer, we learned two different ways how to use Retry logic in your TestNG tests. You can use both of the methods depends on your needs.
+
+How to Rerun All Tests in a Class When one of them Fails in TestNG
+In order to run the tests from scratch when one of them fails, we can use a different strategy. For this first, we should add the below code snippet in TestListener’s onTestFailure method.
+
+private static       int count  = 0;
+private final static int maxTry = 1;
+public void onTestFailure(ITestResult iTestResult) {
+    System.out.println("I am in onTestFailure method " +  getTestMethodName(iTestResult) + " failed")
+    if (count < maxTry) {
+        count++;
+        TestNG tng = new TestNG();
+        tng.setDefaultTestName("RETRY TEST");
+        Class[] classes1 = { iTestResult.getTestClass().getRealClass() };
+        tng.setTestClasses(classes1);
+        tng.addListener(new TestListener());
+        tng.run();
+    }
+}
+and our Test Class is shown below.
+
+package retryfromscratch;
+import static org.testng.Assert.fail;
+import org.testng.annotations.Test;
+public class RerunTestsInAClassWhenATestFailsTest {
+    @Test
+    public void testStep_1() {
+        System.out.println("Test 1 starting.");
+        System.out.println("Test 1 passed.");
+    }
+    @Test
+    public void testStep_2() {
+        System.out.println("Test 2 starting.");
+        System.out.println("Test 2 passed.");
+    }
+    @Test
+    public void testStep_3() {
+        System.out.println("Test 3 starting.");
+        System.out.println("Test 3 failed.");
+        fail("Test 3 failed.");
+    }
+}
+The TestNG suite XML also looks like below.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestNG retrysingletest.Listener Example">
+    <listeners>
+        <listener class-name="retryfromscratch.TestListener"/>
+    </listeners>
+    <test name="TestNG Sample Test">
+        <classes>
+            <class name="retryfromscratch.RerunTestsInAClassWhenATestFailsTest"/>
+        </classes>
+    </test>
+</suite>
+When we run the test by right-clicking our test suite XML file. We will get the below results. The tests will fail at the 3rd test and after that not only test3 all of the tests will run again one more time.
+
